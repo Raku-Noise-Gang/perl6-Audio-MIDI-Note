@@ -1,30 +1,8 @@
 unit class Audio::MIDI::Note:ver<1.001001>;
-use Audio::PortMIDI;
-use OO::Monitors;
 use Subset::Helper;
+use Audio::PortMIDI;
 
 my %midi-note  = build-midi-notes;
-my monitor StreamMonitor {
-    method send-notes ($stream, $channel, $instrument, $notes, $velocity, $tempo, $value) {
-        $stream.write: Audio::PortMIDI::Event.new:
-            :$channel, :event-type(ProgramChange),
-            :data-one($instrument);
-
-        $stream.write: Audio::PortMIDI::Event.new:
-            :$channel, :event-type(NoteOn),
-            :data-one(%midi-note{ $_ }), :data-two($velocity)
-        for |$notes;
-
-        sleep $value * (60 / $tempo);
-
-        $stream.write: Audio::PortMIDI::Event.new:
-            :$channel, :event-type(NoteOff),
-            :data-one(%midi-note{ $_ }), :data-two($velocity)
-        for |$notes;
-    }
-};
-my $Monitor = StreamMonitor.new;
-
 my subset ValidNote     of Str where subset-is { %midi-note{ $_ }:exists },
     'Valid notes are strings "C0" through "G#10"/"Ab10"';
 my subset ValidVelocity of Int where subset-is 0 <= * <= 127,
@@ -33,34 +11,45 @@ my subset ValidVelocity of Int where subset-is 0 <= * <= 127,
 has Int                     $.instrument                   = 0;
 has ValidVelocity           $.velocity               is rw = 80;
 has Int                     $.tempo is rw where { $_ > 0 } = 40;
-has Numeric                 $.value                        = 1/4;
-has Int                     $.channel                      = 2;
-has Audio::PortMIDI::Stream $.stream;
+has Numeric                 $.value                        = ¼;
+has Int                     $.channel                      = 0;
+has Audio::PortMIDI::Stream $.stream is required;
 
 method rplay (|c) { self.play: |c, :rest-to-end }
 
 method play (
-     $notes    is copy,
-     $value            = $!value,
+     $notes                  is copy,
+     $value                          = $!value,
     ValidVelocity :$velocity is copy = $!velocity,
-    Int  :$instrument  = $!instrument,
-    Bool :$off   = False,
-    Bool :$on    = False,
-    Bool :$on-on = False,
-    Bool :$rest-to-end = False,
+    Int           :$instrument       = $!instrument,
+    Bool          :$off              = False,
+    Bool          :$on               = False,
+    Bool          :$on-on            = False,
+    Bool          :$rest-to-end      = False,
 ) {
     $notes = [ $notes ] unless $notes ~~ Array|List;
     die 'Invalid note' if $notes.grep: { $_ !~~ ValidNote };
 
     $velocity += $off ?? -15 !! $on ?? 20 !! $on-on ?? 40 !! 0;
     $velocity = 0   if $velocity < 0;
-    $velocity = 127 if $velocity > 127;
+    $velocity = 126 if $velocity > 126;
 
     my &send-to-play = sub {
-        $Monitor.send-notes(
-            $!stream, $!channel, $instrument,
-            $notes,   $velocity, $!tempo,     $value
-        )
+        $!stream.write: Audio::PortMIDI::Event.new:
+            :$!channel, :event-type(ProgramChange),
+            :data-one($instrument);
+
+        $!stream.write: Audio::PortMIDI::Event.new:
+            :$!channel, :event-type(NoteOn),
+            :data-one(%midi-note{ $_ }), :data-two($velocity)
+        for |$notes;
+
+        sleep $value * (60 / $!tempo);
+
+        $!stream.write: Audio::PortMIDI::Event.new:
+            :$!channel, :event-type(NoteOff),
+            :data-one(%midi-note{ $_ }), :data-two($velocity)
+        for |$notes;
     };
 
     # Unless we're waiting for the note to complete, play it asynchronously
@@ -75,18 +64,22 @@ method rest (Numeric $value = $.value) {
     self;
 }
 
-multi method instrument ($instr) { $!instrument = $instr; self; }
-multi method instrument          { return-rw $!instrument;      }
-multi method velocity   ($vel)   { $!velocity = $vel;     self; }
-multi method velocity            { return-rw $!velocity;        }
-multi method value      ($val)   { $!value = $val;        self; }
-multi method value               { return-rw $!value;           }
-multi method tempo      ($temp)  { $!tempo = $temp;       self; }
-multi method tempo               { return-rw $!tempo;           }
-
 method riff (&riff){
     return self.&riff;
 }
+
+multi method instrument ($instr) { $!instrument = $instr; self; }
+multi method instrument          { return-rw $!instrument;      }
+multi method tempo      ($temp)  { $!tempo = $temp;       self; }
+multi method tempo               { return-rw $!tempo;           }
+multi method stream     ($str)   { $!stream = $str;       self; }
+multi method stream              { return-rw $!stream;          }
+multi method value      ($val)   { $!value = $val;        self; }
+multi method value               { return-rw $!value;           }
+multi method velocity   ($vel)   { $!velocity = $vel;     self; }
+multi method velocity            { return-rw $!velocity;        }
+
+##################################
 
 my sub build-midi-notes {
     my @notes   = <C C# Db D D# Eb E F F# Gb G G# Ab A A# Bb B>;
@@ -101,7 +94,6 @@ my sub build-midi-notes {
     }
     return %midi-note;
 }
-
 
 #     C	C#	D	D#	E	F	F#	G	G#	A	A#	B
 # 0	0	1	2	3	4	5	6	7	8	9	10	11

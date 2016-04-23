@@ -19,6 +19,7 @@ Note: on my system, the midi player on that page kills timidity and I have
 to do `sudo service timidity restart` to get my scripts to work again...
 
 ```perl6
+    use Audio::PortMIDI;
     use Audio::MIDI::Note;
 
     my $stream = Audio::PortMIDI.new.open-output: 3, 32;
@@ -132,13 +133,124 @@ of triplet note values, and use of on- and off- beat velocity shortcuts.
 This module lets you play notes on a MIDI hardware or software device using
 methods that allow to replicate sheet music.
 
+# PLAYING TIPS
+
+* Save repeating chunks into subs and play them with `.riff` method
+* Play the piece using the shortest notes and rests it requires, using
+`.rplay`/`.rest` methods. Use the asynchronous `.play` method Longer notes that overlap them
+
+# ATTRIBUTES
+
+Note: to facilitate chaining, all attributes can be either assigned to directly
+or be given the new value as an argument:
+
+```perl6
+    $note.value = ½;
+    $note.value(½); # same as above; returns invocant
+```
+
+### `:stream`
+
+The `Audio::PortMIDI::Stream` object opened at a MIDI output device. See
+[Audio::PortMIDI](http://modules.perl6.org/dist/Audio::PortMIDI) for details.
+
+### `:tempo`
+
+Positive `Int`.
+Specifies the tempo of the piece in beats per minute per **WHOLE** note.
+*Defaults to:* `40`
+
+### `:value`
+
+`Numeric`. Specifies the default value (amount of time it rings) of the played
+notes. *Defaults to:* `¼`
+
+### `:velocity`
+
+`0 <= Int <= 127`. Specifies the default velocity (similar to volume) of the
+played notes; `127` indicates as loud as possible.
+*Defaults to:* `80` (`mf` loudness in sheet music).
+
+### `:instrument`
+
+`Int`. [MIDI Patch code](https://www.midi.org/specifications/item/gm-level-1-sound-set)
+for the default instrument to use. *Defaults to:* `0` (piano)
+
+### `:channel`
+
+`Int`. Specifies the MIDI channel to use. *Defaults to:* `0`
+
 # METHODS
 
 ## `new`
 
 ```perl6
-my Audio::MIDI::Note $t .= new;
+my Audio::MIDI::Note $note .= new:
+    :stream(Audio::PortMIDI.new.open-output: 3, 32)
+    :20tempo
+    :value(½)
+    :49velocity
+    :30instrument
+    :0channel;
 ```
+
+Creates and returns a new `Audio::MIDI::Note` object. See [ATTRIBUTES][#ATTRIBUTES]
+section for details on the accepted parameters.
+
+## `.play`
+
+```perl6
+    $note.play('C5')
+         .play(<C4 E4 G4>, ⅛, :on-on, :100velocity, :30instrument);
+```
+
+Starts playing a note **and returns immediately**. Useful to play longer
+notes that overlap shorter ones (that you would play with `.rplay`). Takes
+the following arguments:
+
+### First positional
+
+An `Str`or a `List` of strings representing the notes to play. Multiple notes
+will be played *at the same time*, not consecutively. Valid notes are from
+`C0` through `G#10`/`Ab10`.
+
+### Second positional
+
+Note value for the currently played notes. *Defaults to:* the value of
+`:value` attribute.
+
+### `:velocity`
+
+Note velocity for the currently played notes. *Defaults to:* the value of
+`:velocity` attribute.
+
+### `:instrument`
+
+MIDI patch code for the instrument for the currently played notes.
+*Defaults to:* the value of `:instrument` attribute.
+
+### `:on-on`, `:on`, `:off`
+
+Velocity control shortcuts for on/off beats. `:on-on` is the loudest,
+`:on` is less so, but still louder than normal velocity; `:off` is less loud
+than normal velocity.
+
+
+
+lib/Audio/MIDI/Note.pm6:method play (
+lib/Audio/MIDI/Note.pm6:method rest (Numeric $value = $.value) {
+lib/Audio/MIDI/Note.pm6:method rplay (|c) { self.play: |c, :rest-to-end }
+
+lib/Audio/MIDI/Note.pm6:multi method instrument ($instr) { $!instrument = $instr; self; }
+lib/Audio/MIDI/Note.pm6:multi method instrument          { return-rw $!instrument;      }
+lib/Audio/MIDI/Note.pm6:multi method velocity   ($vel)   { $!velocity = $vel;     self; }
+lib/Audio/MIDI/Note.pm6:multi method velocity            { return-rw $!velocity;        }
+lib/Audio/MIDI/Note.pm6:multi method value      ($val)   { $!value = $val;        self; }
+lib/Audio/MIDI/Note.pm6:multi method value               { return-rw $!value;           }
+lib/Audio/MIDI/Note.pm6:multi method tempo      ($temp)  { $!tempo = $temp;       self; }
+lib/Audio/MIDI/Note.pm6:multi method tempo               { return-rw $!tempo;           }
+lib/Audio/MIDI/Note.pm6:method riff (&riff){
+
 
 ----
 
