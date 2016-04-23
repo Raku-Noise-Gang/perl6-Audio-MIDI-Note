@@ -15,9 +15,9 @@ has Numeric                 $.value                        = ¼;
 has Int                     $.channel                      = 0;
 has Audio::PortMIDI::Stream $.stream is required;
 
-method rplay (|c) { self.play: |c, :rest-to-end }
+method play (|c) { self.aplay: |c, :rest-to-end }
 
-method play (
+method aplay (
      $notes                  is copy,
      $value                          = $!value,
     ValidVelocity :$velocity is copy = $!velocity,

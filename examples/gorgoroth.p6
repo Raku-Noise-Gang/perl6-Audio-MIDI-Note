@@ -8,23 +8,23 @@ my Audio::MIDI::Note $note .= new: :31tempo :30instrument :$stream :value(⅔ * 
 
 # Looping `Gorgoroth - A World to Win` solo with organ chord in the background.
 # We use tripplet notes and save repeating pieces into variables for reuse
-my &rhythm = *.rplay('D#5').rplay('D5').rplay('C5');
+my &rhythm = *.play('D#5').play('D5').play('C5');
 my &riff = {
-    .play(<C4 E4 G4>, 4, :19instrument, :40velocity)
+    .aplay(<C4 E4 G4>, 4, :19instrument, :40velocity)
 
-    .rplay('C5',  ⅔*(¼+⅛) )
-    .riff(&rhythm).rplay('C5',  ⅔*(¼+⅛) )
-    .riff(&rhythm).rplay('G#4', ⅔*(¼+⅛) )
-    .riff(&rhythm).rplay('A#4', ⅔*(¼+⅛) )
-    .riff(&rhythm).rplay('C5',  ⅔*(¼+⅛) )
-    .riff(&rhythm).rplay('C5',  ⅔*(¼+⅛) )
+    .play('C5',  ⅔*(¼+⅛) )
+    .riff(&rhythm).play('C5',  ⅔*(¼+⅛) )
+    .riff(&rhythm).play('G#4', ⅔*(¼+⅛) )
+    .riff(&rhythm).play('A#4', ⅔*(¼+⅛) )
+    .riff(&rhythm).play('C5',  ⅔*(¼+⅛) )
+    .riff(&rhythm).play('C5',  ⅔*(¼+⅛) )
     .riff(&rhythm);
 };
 
 $note   .riff(&riff)
-            .rplay('G5',  ¼, :on).rplay('F5', ¼, :off)
-            .rplay('D#5', ¼     ).rplay('D5', ¼, :off)
+            .play('G5',  ¼, :on).play('F5', ¼, :off)
+            .play('D#5', ¼     ).play('D5', ¼, :off)
         .riff(&riff)
-            .rplay('F5', ¼, :on ).rplay('D#5', ¼, :off)
-            .rplay('D5', ¼      ).rplay('A#4', ¼, :off)
+            .play('F5', ¼, :on ).play('D#5', ¼, :off)
+            .play('D5', ¼      ).play('A#4', ¼, :off)
 for ^10;

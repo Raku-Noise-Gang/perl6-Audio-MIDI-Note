@@ -29,64 +29,64 @@ to do `sudo service timidity restart` to get my scripts to work again...
 
     # Pachelbel `Canon in D`
     # Comments reference this sheet music: http://www.8notes.com/scores/420.asp
-    $note   .rplay(<C4 E4>).rplay(<G3 D4>)  # first line of bars, with one repeat
-            .rplay(<A3 C4>).rplay(<E3 B3>)
-            .rplay(<F3 A3>).rplay(<C3 G3>)
-            .rplay(<F3 A3>).rplay(<G3 B3>)
+    $note   .play(<C4 E4>).play(<G3 D4>)  # first line of bars, with one repeat
+            .play(<A3 C4>).play(<E3 B3>)
+            .play(<F3 A3>).play(<C3 G3>)
+            .play(<F3 A3>).play(<G3 B3>)
     for ^2;
 
-    $note   .rplay(<C4 G4 E5>).rplay(<G3 B4 D5>) # second line of bars
-            .rplay(<A3 C5   >).rplay(<E3 G4 B4>)
-            .rplay(<F3 C4 A4>).rplay(<C3 E4 G4>)
-            .rplay(<F3 F4 A4>).rplay(<G3 D4 B4>)
+    $note   .play(<C4 G4 E5>).play(<G3 B4 D5>) # second line of bars
+            .play(<A3 C5   >).play(<E3 G4 B4>)
+            .play(<F3 C4 A4>).play(<C3 E4 G4>)
+            .play(<F3 F4 A4>).play(<G3 D4 B4>)
 
             # first two notes of the chord are half-notes and third one is a crotchet,
-            # so we play the half-notes in async with .play, and then do
-            # the crotchet series with blocking .rplay
+            # so we play the half-notes in async with .aplay, and then do
+            # the crotchet series with blocking .play
             .velocity(64).value(¼) # play louder and switch to quarter note default
-            .play(<C4 E4>, ½).rplay('C5').rplay('C5')
-            .play(<G3 D4>, ½).rplay('D5').rplay('B4')
+            .aplay(<C4 E4>, ½).play('C5').play('C5')
+            .aplay(<G3 D4>, ½).play('D5').play('B4')
 
             # 10th bar
-            .play(<A3 C4>, ½).rplay('C5').rplay('E5')
-            .play('E3',    ½).rplay('G5').rplay('G4')
+            .aplay(<A3 C4>, ½).play('C5').play('E5')
+            .aplay('E3',    ½).play('G5').play('G4')
 
             # 11th and 12th bars
-            .play(<F3 A3>, ½).rplay('A4').rplay('F4')
-            .play('C3'   , ½).rplay('E4').rplay('G4')
-            .play(<F3 A3>, ½).rplay('F4').rplay('C5')
-            .play(<G3 B3>, ½).rplay('B5').rplay('G4')
+            .aplay(<F3 A3>, ½).play('A4').play('F4')
+            .aplay('C3'   , ½).play('E4').play('G4')
+            .aplay(<F3 A3>, ½).play('F4').play('C5')
+            .aplay(<G3 B3>, ½).play('B5').play('G4')
 
             # 13th bar; after the first chord, we're asked to play louder (velocity)
-            .play(<C4 E4>, ½).rplay('C5')
+            .aplay(<C4 E4>, ½).play('C5')
             .velocity(80)
-            .rplay('E5', ⅛).rplay('G5', ⅛).rplay('G5', ⅛)
-            .rplay('A5', ⅛).rplay('G5', ⅛).rplay('F5', ⅛)
+            .play('E5', ⅛).play('G5', ⅛).play('G5', ⅛)
+            .play('A5', ⅛).play('G5', ⅛).play('F5', ⅛)
 
-            .play(<A3 C4>, ½).rplay('E5', ¼+⅛).rplay('E5', ⅛)
-            .play(<E3 G3>, ½).rplay('E5',   ⅛).rplay('F5', ⅛).rplay('E5', ⅛).rplay('D5', ⅛)
+            .aplay(<A3 C4>, ½).play('E5', ¼+⅛).play('E5', ⅛)
+            .aplay(<E3 G3>, ½).play('E5',   ⅛).play('F5', ⅛).play('E5', ⅛).play('D5', ⅛)
 
             # 15th, 16th bar
-            .play(<F3 A3>, ½).rplay('C5', ⅛).rplay('Bb4', ⅛).rplay('A4', ⅛).rplay('Bb4', ⅛)
-            .play(<C3 E3>, ½).rplay('G4').rplay('E4')
-            .play(<F3 A3>, ½).rplay('C4').rplay('F4', ⅛).rplay('E4', ⅛)
-            .play(<G3 B3>, ½).rplay('D4').rplay('G4', ⅛).rplay('F4', ⅛)
+            .aplay(<F3 A3>, ½).play('C5', ⅛).play('Bb4', ⅛).play('A4', ⅛).play('Bb4', ⅛)
+            .aplay(<C3 E3>, ½).play('G4').play('E4')
+            .aplay(<F3 A3>, ½).play('C4').play('F4', ⅛).play('E4', ⅛)
+            .aplay(<G3 B3>, ½).play('D4').play('G4', ⅛).play('F4', ⅛)
 
             # 17th bar: we'll sound half-notes in async, and will use .rest
             # to play the quarter-note rest on the treble clef.
             # .rest can take a rest value as argument, but our current value is
             # already a crotchet, so no argument is needed:
-            .play(<C4 E3>, ½).rest.velocity(64).rplay('C5')
-            .play('G3', ½).rplay('D5').rplay('B4')
+            .aplay(<C4 E3>, ½).rest.velocity(64).play('C5')
+            .aplay('G3', ½).play('D5').play('B4')
 
             # Last row of bars
-            .play(<A3 C4>, ½).rplay('C5').rplay('E4')
-            .play(<E3 B3>, ½).rplay('G4', ¼+⅛).rplay('A4', ⅛)
-            .play(<F3 A3>, ½).rplay('F4').rplay('C4')
-            .play(<C3 G3>, ½).rplay('E4').rplay('G4')
-            .play(<F3 A3>, ½).rplay('F4').rplay('E4')
-            .play(<G3 B3>, ½).rplay('D4').rplay('G4')
-            .rplay(<C3 C4 E3>, 1)
+            .aplay(<A3 C4>, ½).play('C5').play('E4')
+            .aplay(<E3 B3>, ½).play('G4', ¼+⅛).play('A4', ⅛)
+            .aplay(<F3 A3>, ½).play('F4').play('C4')
+            .aplay(<C3 G3>, ½).play('E4').play('G4')
+            .aplay(<F3 A3>, ½).play('F4').play('E4')
+            .aplay(<G3 B3>, ½).play('D4').play('G4')
+            .play(<C3 C4 E3>, 1)
     ;
 ```
 
@@ -106,25 +106,25 @@ of triplet note values, and use of on- and off- beat velocity shortcuts.
 
     # Looping `Gorgoroth - A World to Win` solo with organ chord in the background.
     # We use triplet notes and save repeating pieces into variables for reuse
-    my &rhythm = *.rplay('D#5').rplay('D5').rplay('C5');
+    my &rhythm = *.play('D#5').play('D5').play('C5');
     my &riff = {
-        .play(<C4 E4 G4>, 4, :19instrument, :40velocity)
+        .aplay(<C4 E4 G4>, 4, :19instrument, :40velocity)
 
-        .rplay('C5',  ⅔*(¼+⅛) )
-        .riff(&rhythm).rplay('C5',  ⅔*(¼+⅛) )
-        .riff(&rhythm).rplay('G#4', ⅔*(¼+⅛) )
-        .riff(&rhythm).rplay('A#4', ⅔*(¼+⅛) )
-        .riff(&rhythm).rplay('C5',  ⅔*(¼+⅛) )
-        .riff(&rhythm).rplay('C5',  ⅔*(¼+⅛) )
+        .play('C5',  ⅔*(¼+⅛) )
+        .riff(&rhythm).play('C5',  ⅔*(¼+⅛) )
+        .riff(&rhythm).play('G#4', ⅔*(¼+⅛) )
+        .riff(&rhythm).play('A#4', ⅔*(¼+⅛) )
+        .riff(&rhythm).play('C5',  ⅔*(¼+⅛) )
+        .riff(&rhythm).play('C5',  ⅔*(¼+⅛) )
         .riff(&rhythm);
     };
 
     $note   .riff(&riff)
-                .rplay('G5',  ¼, :on).rplay('F5', ¼, :off)
-                .rplay('D#5', ¼     ).rplay('D5', ¼, :off)
+                .play('G5',  ¼, :on).play('F5', ¼, :off)
+                .play('D#5', ¼     ).play('D5', ¼, :off)
             .riff(&riff)
-                .rplay('F5', ¼, :on ).rplay('D#5', ¼, :off)
-                .rplay('D5', ¼      ).rplay('A#4', ¼, :off)
+                .play('F5', ¼, :on ).play('D#5', ¼, :off)
+                .play('D5', ¼      ).play('A#4', ¼, :off)
     for ^10;
 ```
 
@@ -137,7 +137,8 @@ methods that allow to replicate sheet music.
 
 * Save repeating chunks into subs and play them with `.riff` method
 * Play the piece using the shortest notes and rests it requires, using
-`.rplay`/`.rest` methods. Use the asynchronous `.play` method Longer notes that overlap them
+`.play`/`.rest` methods. Use the asynchronous `.aplay` method to play
+longer notes that overlap these shorter ones.
 
 # ATTRIBUTES
 
@@ -197,6 +198,17 @@ my Audio::MIDI::Note $note .= new:
 Creates and returns a new `Audio::MIDI::Note` object. See [ATTRIBUTES][#ATTRIBUTES]
 section for details on the accepted parameters.
 
+## `.aplay`
+
+```perl6
+    $note.aplay('C5')
+         .aplay(<C4 E4 G4>, ⅛, :on-on, :100velocity, :30instrument);
+```
+
+Same as `.play`, but is asynchronous **and returns immediately**.
+Useful to play longer notes that overlap shorter ones (that you would play
+with `.play`). Takes the same arguments as `.play`
+
 ## `.play`
 
 ```perl6
@@ -204,9 +216,7 @@ section for details on the accepted parameters.
          .play(<C4 E4 G4>, ⅛, :on-on, :100velocity, :30instrument);
 ```
 
-Starts playing a note **and returns immediately**. Useful to play longer
-notes that overlap shorter ones (that you would play with `.rplay`). Takes
-the following arguments:
+Plays one or more notes (simultaneously). Takes the following arguments:
 
 ### First positional
 
@@ -235,22 +245,42 @@ Velocity control shortcuts for on/off beats. `:on-on` is the loudest,
 `:on` is less so, but still louder than normal velocity; `:off` is less loud
 than normal velocity.
 
+## `rest`
 
+```perl6
+    $note.rest
+         .rest(⅛);
+```
 
-lib/Audio/MIDI/Note.pm6:method play (
-lib/Audio/MIDI/Note.pm6:method rest (Numeric $value = $.value) {
-lib/Audio/MIDI/Note.pm6:method rplay (|c) { self.play: |c, :rest-to-end }
+"Plays" a rest by blocking execution for the specified note value. Takes
+`Numeric` note value, which *defaults to:* the value of `:value` attribute.
 
-lib/Audio/MIDI/Note.pm6:multi method instrument ($instr) { $!instrument = $instr; self; }
-lib/Audio/MIDI/Note.pm6:multi method instrument          { return-rw $!instrument;      }
-lib/Audio/MIDI/Note.pm6:multi method velocity   ($vel)   { $!velocity = $vel;     self; }
-lib/Audio/MIDI/Note.pm6:multi method velocity            { return-rw $!velocity;        }
-lib/Audio/MIDI/Note.pm6:multi method value      ($val)   { $!value = $val;        self; }
-lib/Audio/MIDI/Note.pm6:multi method value               { return-rw $!value;           }
-lib/Audio/MIDI/Note.pm6:multi method tempo      ($temp)  { $!tempo = $temp;       self; }
-lib/Audio/MIDI/Note.pm6:multi method tempo               { return-rw $!tempo;           }
-lib/Audio/MIDI/Note.pm6:method riff (&riff){
+## `riff`
 
+```perl6
+    my &riff = *.play('C4').play('E4').play('G4');
+
+    $note.&riff;
+    $note.riff(&riff);
+```
+
+The last two lines in the code above are equivalent. The only issue is you can't
+split a method chain that uses `&riff` onto multiple lines. This is where the
+`.riff` method comes into play. It takes your `Callable` as an argument and
+lets you break up your method chains on multiple lines.
+
+Storing bits of music into variables and then playing them with `.riff` lets
+you re-use repeating bars or fragments in a piece of music.
+
+Also worth noting: method chains started on a `WhateverStar` also cannot be
+broken up into multiple lines. Just use a set of curlies instead:
+
+```perl6
+    my &riff = {
+        .play('C4').play('E4')
+        .play('G4').play('C5');
+    }
+```
 
 ----
 
