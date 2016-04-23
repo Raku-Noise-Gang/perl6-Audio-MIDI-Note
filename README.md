@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/zoffixznet/perl6-Audio-MIDI-Note.svg)](https://travis-ci.org/zoffixznet/perl6-Audio-MIDI-Note)
-
 # NAME
 
 Audio::MIDI::Note - playable MIDI note
