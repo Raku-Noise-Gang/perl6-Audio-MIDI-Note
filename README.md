@@ -150,34 +150,34 @@ or be given the new value as an argument:
     $note.value(½); # same as above; returns invocant
 ```
 
-### `:stream`
+#### `:stream`
 
 The `Audio::PortMIDI::Stream` object opened at a MIDI output device. See
 [Audio::PortMIDI](http://modules.perl6.org/dist/Audio::PortMIDI) for details.
 
-### `:tempo`
+#### `:tempo`
 
 Positive `Int`.
 Specifies the tempo of the piece in beats per minute per **WHOLE** note.
 *Defaults to:* `40`
 
-### `:value`
+#### `:value`
 
 `Numeric`. Specifies the default value (amount of time it rings) of the played
 notes. *Defaults to:* `¼`
 
-### `:velocity`
+#### `:velocity`
 
 `0 <= Int <= 127`. Specifies the default velocity (similar to volume) of the
 played notes; `127` indicates as loud as possible.
 *Defaults to:* `80` (`mf` loudness in sheet music).
 
-### `:instrument`
+#### `:instrument`
 
 `Int`. [MIDI Patch code](https://www.midi.org/specifications/item/gm-level-1-sound-set)
 for the default instrument to use. *Defaults to:* `0` (piano)
 
-### `:channel`
+#### `:channel`
 
 `Int`. Specifies the MIDI channel to use. *Defaults to:* `0`
 
@@ -218,28 +218,28 @@ with `.play`). Takes the same arguments as `.play`
 
 Plays one or more notes (simultaneously). Takes the following arguments:
 
-### First positional
+#### First positional
 
 An `Str`or a `List` of strings representing the notes to play. Multiple notes
 will be played *at the same time*, not consecutively. Valid notes are from
 `C0` through `G#10`/`Ab10`.
 
-### Second positional
+#### Second positional
 
 Note value for the currently played notes. *Defaults to:* the value of
 `:value` attribute.
 
-### `:velocity`
+#### `:velocity`
 
 Note velocity for the currently played notes. *Defaults to:* the value of
 `:velocity` attribute.
 
-### `:instrument`
+#### `:instrument`
 
 MIDI patch code for the instrument for the currently played notes.
 *Defaults to:* the value of `:instrument` attribute.
 
-### `:on-on`, `:on`, `:off`
+#### `:on-on`, `:on`, `:off`
 
 Velocity control shortcuts for on/off beats. `:on-on` is the loudest,
 `:on` is less so, but still louder than normal velocity; `:off` is less loud
