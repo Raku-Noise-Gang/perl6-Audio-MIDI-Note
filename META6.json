@@ -2,7 +2,7 @@
     "perl"         : "6.c",
     "name"         : "Audio::MIDI::Note",
     "version"      : "1.001001",
-    "description"  : "Playable MIDI instruments",
+    "description"  : "Playable MIDI note",
     "depends"      : [
         "Audio::PortMIDI",
         "Subset::Helper"
