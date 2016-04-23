@@ -9,6 +9,37 @@ Audio::MIDI::Note - playable MIDI note
 This module lets you play notes on a MIDI hardware or software device using
 methods that allow to replicate sheet music.
 
+# TABLE OF CONTENTS
+- [NAME](#name)
+- [DESCRIPTION](#description)
+- [NON Perl 6 REQUIREMENTS](#non-perl-6-requirements)
+- [SYNOPSIS](#synopsis)
+    - [<em>Canon in D</em> by Johann Pachelbel](#canon-in-d-by-johann-pachelbel)
+    - [<em>Gorgoroth - A World to Win</em> Solo](#gorgoroth---a-world-to-win-solo)
+- [PLAYING TIPS](#playing-tips)
+- [ATTRIBUTES](#attributes)
+            - [`:stream`](#stream)
+            - [`:tempo`](#tempo)
+            - [`:value`](#value)
+            - [`:velocity`](#velocity)
+            - [`:instrument`](#instrument)
+            - [`:channel`](#channel)
+- [METHODS](#methods)
+    - [`new`](#new)
+    - [`.aplay`](#aplay)
+    - [`.play`](#play)
+            - [First positional](#first-positional)
+            - [Second positional](#second-positional)
+            - [`:velocity`](#velocity-1)
+            - [`:instrument`](#instrument-1)
+            - [`:on-on`, `:on`, `:off`](#on-on-on-off)
+    - [`rest`](#rest)
+    - [`riff`](#riff)
+- [REPOSITORY](#repository)
+- [BUGS](#bugs)
+- [AUTHOR](#author)
+- [LICENSE](#license)
+
 # NON Perl 6 REQUIREMENTS
 
 This module uses [Audio::PortMIDI](http://modules.perl6.org/repo/Audio::PortMIDI)
