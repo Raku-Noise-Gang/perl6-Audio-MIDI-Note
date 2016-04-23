@@ -4,6 +4,11 @@
 
 Audio::MIDI::Note - playable MIDI note
 
+# DESCRIPTION
+
+This module lets you play notes on a MIDI hardware or software device using
+methods that allow to replicate sheet music.
+
 # NON Perl 6 REQUIREMENTS
 
 This module uses [Audio::PortMIDI](http://modules.perl6.org/repo/Audio::PortMIDI)
@@ -127,11 +132,6 @@ of triplet note values, and use of on- and off- beat velocity shortcuts.
                 .play('D5', ¼      ).play('A#4', ¼, :off)
     for ^10;
 ```
-
-# DESCRIPTION
-
-This module lets you play notes on a MIDI hardware or software device using
-methods that allow to replicate sheet music.
 
 # PLAYING TIPS
 
