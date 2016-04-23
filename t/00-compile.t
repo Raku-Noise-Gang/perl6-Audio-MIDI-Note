@@ -1,3 +1,5 @@
 use lib 'lib';
 use Test;
-use Audio::MIDI::Note;
+use-ok 'Audio::MIDI::Note';
+
+done-testing;
