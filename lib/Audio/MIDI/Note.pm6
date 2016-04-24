@@ -69,14 +69,14 @@ method riff (&riff){
 }
 
 multi method instrument ($instr) { $!instrument = $instr; self; }
+multi method tempo      ($temp)  { $!tempo      = $temp;  self; }
+multi method stream     ($str)   { $!stream     = $str;   self; }
+multi method value      ($val)   { $!value      = $val;   self; }
+multi method velocity   ($vel)   { $!velocity   = $vel;   self; }
 multi method instrument          { return-rw $!instrument;      }
-multi method tempo      ($temp)  { $!tempo = $temp;       self; }
 multi method tempo               { return-rw $!tempo;           }
-multi method stream     ($str)   { $!stream = $str;       self; }
 multi method stream              { return-rw $!stream;          }
-multi method value      ($val)   { $!value = $val;        self; }
 multi method value               { return-rw $!value;           }
-multi method velocity   ($vel)   { $!velocity = $vel;     self; }
 multi method velocity            { return-rw $!velocity;        }
 
 ##################################
