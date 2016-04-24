@@ -23,7 +23,7 @@ methods that allow to replicate sheet music.
     - [`:instrument`](#instrument)
     - [`:channel`](#channel)
 - [METHODS](#methods)
-    - [`new`](#new)
+    - [`.new`](#new)
     - [`.aplay`](#aplay)
     - [`.play`](#play)
         - [First positional](#first-positional)
@@ -31,8 +31,8 @@ methods that allow to replicate sheet music.
         - [`:velocity`](#velocity-1)
         - [`:instrument`](#instrument-1)
         - [`:on-on`, `:on`, `:off`](#on-on-on-off)
-    - [`rest`](#rest)
-    - [`riff`](#riff)
+    - [`.rest`](#rest)
+    - [`.riff`](#riff)
 - [REPOSITORY](#repository)
 - [BUGS](#bugs)
 - [AUTHOR](#author)
@@ -212,7 +212,7 @@ for the default instrument to use. *Defaults to:* `0` (piano)
 
 # METHODS
 
-## `new`
+## `.new`
 
 ```perl6
 my Audio::MIDI::Note $note .= new:
@@ -251,7 +251,8 @@ Plays one or more notes (simultaneously). Takes the following arguments:
 
 An `Str`or a `List` of strings representing the notes to play. Multiple notes
 will be played *at the same time*, not consecutively. Valid notes are from
-`C0` through `G#10`/`Ab10`.
+`C0` through `G#10`/`Ab10`. Use hashmark (`#`) to indicate sharps and lower-case B
+(`b`) to indicate flats. This argument is case-sensitive.
 
 #### Second positional
 
@@ -274,7 +275,7 @@ Velocity control shortcuts for on/off beats. `:on-on` is the loudest,
 `:on` is less so, but still louder than normal velocity; `:off` is less loud
 than normal velocity.
 
-## `rest`
+## `.rest`
 
 ```perl6
     $note.rest
@@ -284,7 +285,7 @@ than normal velocity.
 "Plays" a rest by blocking execution for the specified note value. Takes
 `Numeric` note value, which *defaults to:* the value of `:value` attribute.
 
-## `riff`
+## `.riff`
 
 ```perl6
     my &riff = *.play('C4').play('E4').play('G4');
