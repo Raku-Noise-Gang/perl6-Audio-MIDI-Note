@@ -128,7 +128,7 @@ to do `sudo service timidity restart` to get my scripts to work again...
 
 Part of the solo from [A World to Win](https://www.youtube.com/watch?v=7EvOTkEMlug),
 showing swap of instruments, re-use of repeating pieces of music, calculation
-of triplet note values, and use of on- and off- beat velocity shortcuts.
+of triplet note values, and use of on- and off-beat velocity shortcuts.
 
 ```perl6
     use Audio::MIDI::Note;
@@ -154,11 +154,11 @@ of triplet note values, and use of on- and off- beat velocity shortcuts.
     };
 
     $note   .riff(&riff)
-                .play('G5',  ¼, :on).play('F5', ¼, :off)
-                .play('D#5', ¼     ).play('D5', ¼, :off)
+                .play('G5',  ¼, :on).play('F5',  ¼, :off)
+                .play('D#5', ¼     ).play('D5',  ¼, :off)
             .riff(&riff)
-                .play('F5', ¼, :on ).play('D#5', ¼, :off)
-                .play('D5', ¼      ).play('A#4', ¼, :off)
+                .play('F5',  ¼,:on ).play('D#5', ¼, :off)
+                .play('D5',  ¼     ).play('A#4', ¼, :off)
     for ^10;
 ```
 
