@@ -15,8 +15,6 @@ has Numeric                 $.value                        = ¼;
 has Int                     $.channel                      = 0;
 has Audio::PortMIDI::Stream $.stream is required;
 
-method play (|c) { self.aplay: |c, :rest-to-end }
-
 method aplay (
      $notes                  is copy,
      $value                          = $!value,
@@ -58,15 +56,9 @@ method aplay (
     self;
 }
 
-method rest (Numeric $value = $.value) {
-    sleep $value * (60 / $!tempo);
-
-    self;
-}
-
-method riff (&riff){
-    return self.&riff;
-}
+method play (|c)                       { self.aplay: |c, :rest-to-end         }
+method rest (Numeric $value = $.value) { sleep $value * (60 / $!tempo); self; }
+method riff (&riff)                    { return self.&riff;                   }
 
 multi method instrument ($instr) { $!instrument = $instr; self; }
 multi method tempo      ($temp)  { $!tempo      = $temp;  self; }
