@@ -224,7 +224,7 @@ my Audio::MIDI::Note $note .= new:
     :0channel;
 ```
 
-Creates and returns a new `Audio::MIDI::Note` object. See [ATTRIBUTES][#ATTRIBUTES]
+Creates and returns a new `Audio::MIDI::Note` object. See [ATTRIBUTES](#ATTRIBUTES)
 section for details on the accepted parameters.
 
 ## `.aplay`
