@@ -14,6 +14,6 @@
     "provides"     : {
         "Audio::MIDI::Note" : "lib/Audio/MIDI/Note.pm6"
     },
-    "authors"      : [ "Zoffix Znet" ],
-    "source-url"   : "git://github.com/zoffixznet/perl6-Audio-MIDI-Note.git"
+    "authors"      : [ "Perl6 Noise Gang" ],
+    "source-url"   : "git://github.com/Perl6-Noise-Gang/perl6-Audio-MIDI-Note.git"
 }
