@@ -6,7 +6,7 @@ END { $stream.close }
 
 my Audio::MIDI::Note $note .= new: :20tempo :$stream, :value(½), :49velocity;
 
-# Pachelbel `Canon in D`
+# Pachelbel `Canon in C`
 # Comments reference this sheet music: http://www.8notes.com/scores/420.asp
 $note   .play(<C4 E4>).play(<G3 D4>)  # first line of bars, with one repeat
         .play(<A3 C4>).play(<E3 B3>)
