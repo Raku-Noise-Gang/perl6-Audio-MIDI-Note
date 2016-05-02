@@ -46,7 +46,7 @@ On Debian and derivatives, you can install it with `sudo apt-get install libport
 
 # SYNOPSIS
 
-## *Canon in D* by Johann Pachelbel
+## *Canon* by Johann Pachelbel (in C key)
 
 Replication of [this sheet music](http://www.8notes.com/scores/420.asp).
 Note: on my system, the midi player on that page kills timidity and I have
